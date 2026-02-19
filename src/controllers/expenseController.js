@@ -64,4 +64,122 @@ const deleteTransaction = async (req, res) => {
     res.status(200).json({ id: req.params.id });
 };
 
-export { addTransaction, getTransactions, deleteTransaction };
+
+// @desc    Get analytics data
+// @route   GET /api/transactions/analytics
+// @access  Private
+const getAnalytics = async (req, res) => {
+    try {
+        const userid = req.user._id;
+
+        // 1. Total Income & Expense
+        const totalIncomeExpense = await Expense.aggregate([
+            { $match: { user: userid } },
+            {
+                $group: {
+                    _id: null,
+                    totalIncome: {
+                        $sum: {
+                            $cond: [{ $eq: ["$type", "income"] }, "$amount", 0]
+                        }
+                    },
+                    totalExpense: {
+                        $sum: {
+                            $cond: [{ $eq: ["$type", "expense"] }, "$amount", 0]
+                        }
+                    }
+                }
+            }
+        ]);
+
+        // 2. Category Wise Expense
+        const categoryData = await Expense.aggregate([
+            { $match: { user: userid, type: 'expense' } },
+            {
+                $group: {
+                    _id: "$category",
+                    value: { $sum: "$amount" }
+                }
+            },
+            { $project: { name: "$_id", value: 1, _id: 0 } }
+        ]);
+        
+        // Add colors to categories (simple round robin or predefined)
+        const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#AF19FF', '#FF19A3'];
+        const coloredCategoryData = categoryData.map((item, index) => ({
+            ...item,
+            color: COLORS[index % COLORS.length]
+        }));
+
+
+        // 3. Monthly Data
+        const monthlyData = await Expense.aggregate([
+            { $match: { user: userid } },
+            {
+                $group: {
+                    _id: { $month: "$date" },
+                    income: {
+                        $sum: {
+                            $cond: [{ $eq: ["$type", "income"] }, "$amount", 0]
+                        }
+                    },
+                    expense: {
+                        $sum: {
+                            $cond: [{ $eq: ["$type", "expense"] }, "$amount", 0]
+                        }
+                    }
+                }
+            },
+            { $sort: { "_id": 1 } }
+        ]);
+
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const formattedMonthlyData = monthlyData.map(d => ({
+            month: monthNames[d._id - 1],
+            income: d.income,
+            expenses: d.expense
+        }));
+
+        // 4. Weekly Data (Last 7 days expenses)
+        const last7Days = new Date();
+        last7Days.setDate(last7Days.getDate() - 7);
+        
+        const weeklyData = await Expense.aggregate([
+             { 
+                $match: { 
+                    user: userid,
+                    type: 'expense',
+                    date: { $gte: last7Days }
+                } 
+            },
+            {
+                $group: {
+                    _id: { $dayOfWeek: "$date" },
+                    amount: { $sum: "$amount" }
+                }
+            },
+            { $sort: { "_id": 1 } }
+        ]);
+
+        const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+        const formattedWeeklyData = weeklyData.map(d => ({
+            day: days[d._id - 1],
+            amount: d.amount
+        }));
+
+        res.status(200).json({
+            totalIncome: totalIncomeExpense[0]?.totalIncome || 0,
+            totalExpense: totalIncomeExpense[0]?.totalExpense || 0,
+            categoryData: coloredCategoryData,
+            monthlyData: formattedMonthlyData,
+            weeklyExpenses: formattedWeeklyData
+        });
+
+    } catch (error) {
+        res.status(500);
+        throw new Error('Server Error');
+    }
+};
+
+export { addTransaction, getTransactions, deleteTransaction, getAnalytics };
+
