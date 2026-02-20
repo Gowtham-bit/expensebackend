@@ -32,6 +32,14 @@ const expenseSchema = mongoose.Schema(
         description: {
             type: String,
         },
+        frequency: {
+            type: String,
+            default: "none",
+            enum: ["none", "daily", "weekly", "monthly", "yearly"]
+        },
+        nextDueDate: {
+            type: Date,
+        }
     },
     {
         timestamps: true,

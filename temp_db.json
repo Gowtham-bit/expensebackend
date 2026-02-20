@@ -1,0 +1,104 @@
+[
+  {
+    "_id": "69954d4f8c789db0b264b8f1",
+    "name": "Test User",
+    "email": "test@example.com",
+    "password": "$2b$10$.gkZD5IvLgC4XkpTmHbl8.vW8cbmd04ql0oewQd96HuIrlMPtK5Ry",
+    "isAdmin": true,
+    "createdAt": "2026-02-18T05:25:35.828Z",
+    "updatedAt": "2026-02-18T09:20:21.896Z",
+    "__v": 0,
+    "location": "",
+    "phone": "",
+    "settings": {
+      "darkMode": true,
+      "notifications": false,
+      "emailAlerts": true
+    }
+  },
+  {
+    "_id": "69954f88ae134bbfce32c6ad",
+    "name": "GOWTHAM",
+    "email": "gowtham@gmail.com",
+    "password": "$2b$10$FAQyJ6sGc1BDhby/Gxoph.PWzhGJdjaX4jPA0kSU0p9ZyUSX9Nme2",
+    "isAdmin": false,
+    "createdAt": "2026-02-18T05:35:04.110Z",
+    "updatedAt": "2026-02-18T09:24:36.126Z",
+    "__v": 0,
+    "location": "ERODE, TN",
+    "phone": "1234567890",
+    "settings": {
+      "darkMode": false,
+      "notifications": false,
+      "emailAlerts": false
+    }
+  },
+  {
+    "_id": "6996e7bba5d6ef0ac5550eac",
+    "name": "Test User",
+    "email": "test1771497403582@example.com",
+    "password": "$2b$10$NqJRemWiS98aLYGeN4a6FO9emvUd7o0KPm3o/rzgorrwbYbstvt1y",
+    "isAdmin": false,
+    "phone": "",
+    "location": "",
+    "settings": {
+      "darkMode": false,
+      "notifications": true,
+      "emailAlerts": true
+    },
+    "createdAt": "2026-02-19T10:36:43.589Z",
+    "updatedAt": "2026-02-19T10:36:43.589Z",
+    "__v": 0
+  },
+  {
+    "_id": "6997f91a5e294c4cfcf5a4f4",
+    "name": "User A",
+    "email": "usera@example.com",
+    "password": "$2b$10$d/iGHrHhcQKRV3CAA1OXXe3HbL/vSP2.Uliamkq0mOr3BQ6dljTZ2",
+    "isAdmin": false,
+    "phone": "",
+    "location": "",
+    "settings": {
+      "darkMode": false,
+      "notifications": true,
+      "emailAlerts": true
+    },
+    "createdAt": "2026-02-20T06:03:06.227Z",
+    "updatedAt": "2026-02-20T06:03:06.227Z",
+    "__v": 0
+  },
+  {
+    "_id": "6997f98e5e294c4cfcf5a4ff",
+    "name": "User B",
+    "email": "userb@example.com",
+    "password": "$2b$10$.6pEYdOz5vOOJ8F1YJfr8.0Eos77vtDuVhrc34Urb4fgdp6E7UB9u",
+    "isAdmin": false,
+    "phone": "",
+    "location": "",
+    "settings": {
+      "darkMode": false,
+      "notifications": true,
+      "emailAlerts": true
+    },
+    "createdAt": "2026-02-20T06:05:02.427Z",
+    "updatedAt": "2026-02-20T06:05:02.427Z",
+    "__v": 0
+  },
+  {
+    "_id": "69981db11385d63a4e6f8572",
+    "name": "SGM",
+    "email": "sgm@gmail.com",
+    "password": "$2b$10$AmpL/SRD3yY32266Fiw6LOJterup16DW55zYofFqqrpQQ3tTakgUu",
+    "isAdmin": false,
+    "phone": "9874563210",
+    "location": "Sathy",
+    "settings": {
+      "darkMode": false,
+      "notifications": true,
+      "emailAlerts": true
+    },
+    "createdAt": "2026-02-20T08:39:13.332Z",
+    "updatedAt": "2026-02-20T08:47:35.266Z",
+    "__v": 0
+  }
+]

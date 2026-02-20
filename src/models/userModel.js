@@ -30,6 +30,10 @@ const userSchema = mongoose.Schema(
             type: String,
             default: "",
         },
+        avatar: {
+            type: String,
+            default: "",
+        },
         settings: {
             darkMode: {
                 type: Boolean,
@@ -43,6 +47,19 @@ const userSchema = mongoose.Schema(
                 type: Boolean,
                 default: true,
             },
+            categories: {
+                type: [String],
+                default: [
+                    "Shopping",
+                    "Food & Drink",
+                    "Transport",
+                    "Housing",
+                    "Dining",
+                    "Salary",
+                    "Income",
+                    "Other"
+                ]
+            }
         },
     },
     {
@@ -54,13 +71,14 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password);
 };
 
-userSchema.pre('save', async function () {
+userSchema.pre('save', async function (next) {
     if (!this.isModified('password')) {
-        return;
+        return next();
     }
 
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
+    next();
 });
 
 const User = mongoose.model('User', userSchema);

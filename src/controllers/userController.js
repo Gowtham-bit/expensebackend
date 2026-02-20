@@ -1,7 +1,6 @@
 
 import User from '../models/userModel.js';
 import generateToken from '../utils/generateToken.js';
-
 // @desc    Auth user & get token
 // @route   POST /api/users/login
 // @access  Public
@@ -18,6 +17,7 @@ const authUser = async (req, res) => {
             isAdmin: user.isAdmin,
             phone: user.phone,
             location: user.location,
+            avatar: user.avatar,
             settings: user.settings,
             token: generateToken(user._id),
         });
@@ -72,6 +72,10 @@ const getUserProfile = async (req, res) => {
             name: user.name,
             email: user.email,
             isAdmin: user.isAdmin,
+            phone: user.phone,
+            location: user.location,
+            avatar: user.avatar,
+            settings: user.settings,
         });
     } else {
         res.status(404);
@@ -102,6 +106,10 @@ const updateUserProfile = async (req, res) => {
             user.password = req.body.password;
         }
 
+        if (req.body.avatar !== undefined) {
+            user.avatar = req.body.avatar;
+        }
+
         const updatedUser = await user.save();
 
         res.json({
@@ -111,6 +119,7 @@ const updateUserProfile = async (req, res) => {
             isAdmin: updatedUser.isAdmin,
             phone: updatedUser.phone,
             location: updatedUser.location,
+            avatar: updatedUser.avatar,
             settings: updatedUser.settings,
             token: generateToken(updatedUser._id),
         });
