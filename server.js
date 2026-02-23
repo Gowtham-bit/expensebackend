@@ -16,6 +16,20 @@ connectDB();
 startCronJobs();
 
 const app = express();
+import fs from 'fs';
+
+process.on('unhandledRejection', (reason, promise) => {
+    fs.appendFileSync('crash.log', `Unhandled Rejection: ${reason.stack || reason}\n`);
+});
+
+process.on('uncaughtException', (err) => {
+    fs.appendFileSync('crash.log', `Uncaught Exception: ${err.stack || err}\n`);
+});
+
+app.use((err, req, res, next) => {
+    fs.appendFileSync('crash.log', `Express Error: ${err.stack || err}\n`);
+    next(err);
+});
 
 app.use(cors());
 app.use(express.json());
