@@ -128,6 +128,21 @@ const updateTransaction = async (req, res) => {
 };
 
 
+// @desc    Delete all transactions for a user
+// @route   DELETE /api/transactions/reset
+// @access  Private
+const deleteAllTransactions = async (req, res) => {
+    // Check for user
+    if (!req.user) {
+        res.status(401);
+        throw new Error('User not found');
+    }
+
+    await Expense.deleteMany({ user: req.user._id });
+
+    res.status(200).json({ message: 'All transactions deleted successfully' });
+};
+
 // @desc    Get analytics data
 // @route   GET /api/transactions/analytics
 // @access  Private
@@ -244,5 +259,5 @@ const getAnalytics = async (req, res) => {
     }
 };
 
-export { addTransaction, getTransactions, deleteTransaction, updateTransaction, getAnalytics };
+export { addTransaction, getTransactions, deleteTransaction, updateTransaction, getAnalytics, deleteAllTransactions };
 

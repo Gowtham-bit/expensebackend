@@ -1,0 +1,8 @@
+Databases:
+- test
+- admin
+- local
+
+Collections in current db (test):
+- expenses
+- users
