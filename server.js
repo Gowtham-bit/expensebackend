@@ -31,7 +31,11 @@ app.use((err, req, res, next) => {
     next(err);
 });
 
-app.use(cors());
+app.use(cors({
+    origin: ['https://expenseiq-three.vercel.app', 'http://localhost:5173'], // Allowed frontend domains
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    credentials: true
+}));
 app.use(express.json());
 
 app.get('/', (req, res) => {
