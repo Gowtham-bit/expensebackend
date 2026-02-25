@@ -32,7 +32,7 @@ app.use((err, req, res, next) => {
 });
 
 app.use(cors({
-    origin: ['https://expenseiq-three.vercel.app', 'http://localhost:5173'], // Allowed frontend domains
+    origin: ['https://expenseiq-three.vercel.app', 'https://expenseiq-sgm.vercel.app', 'http://localhost:5173'], // Allowed frontend domains
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     credentials: true
 }));
