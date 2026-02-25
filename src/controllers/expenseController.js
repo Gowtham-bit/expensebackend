@@ -182,6 +182,15 @@ const getAnalytics = async (req, res) => {
             { $project: { name: "$_id", value: 1, _id: 0 } }
         ]);
 
+        // Calculate highest and lowest categories
+        let highestCategory = null;
+        let lowestCategory = null;
+
+        if (categoryData.length > 0) {
+            highestCategory = categoryData.reduce((prev, current) => (prev.value > current.value) ? prev : current);
+            lowestCategory = categoryData.reduce((prev, current) => (prev.value < current.value) ? prev : current);
+        }
+
         // Add colors to categories (simple round robin or predefined)
         const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#AF19FF', '#FF19A3'];
         const coloredCategoryData = categoryData.map((item, index) => ({
@@ -250,7 +259,9 @@ const getAnalytics = async (req, res) => {
             totalExpense: totalIncomeExpense[0]?.totalExpense || 0,
             categoryData: coloredCategoryData,
             monthlyData: formattedMonthlyData,
-            weeklyExpenses: formattedWeeklyData
+            weeklyExpenses: formattedWeeklyData,
+            highestCategory,
+            lowestCategory
         });
 
     } catch (error) {
