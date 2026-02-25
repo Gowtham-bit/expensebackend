@@ -7,6 +7,7 @@ import { connectDB } from './config/db.js';
 import userRoutes from './src/routes/userRoutes.js';
 import expenseRoutes from './src/routes/expenseRoutes.js';
 import uploadRoutes from './src/routes/uploadRoutes.js';
+import budgetRoutes from './src/routes/budgetRoutes.js';
 import { notFound, errorHandler } from './src/middleware/errorMiddleware.js';
 import { startCronJobs } from './src/utils/cronJobs.js';
 
@@ -45,6 +46,7 @@ app.get('/', (req, res) => {
 app.use('/api/users', userRoutes);
 app.use('/api/transactions', expenseRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/budget', budgetRoutes);
 
 const __dirname = path.resolve();
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
