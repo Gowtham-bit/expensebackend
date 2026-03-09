@@ -227,16 +227,16 @@ const getAnalytics = async (req, res) => {
             expenses: d.expense
         }));
 
-        // 4. Weekly Data (Last 7 days expenses)
-        const last7Days = new Date();
-        last7Days.setDate(last7Days.getDate() - 7);
+        // 4. Weekly Data (Last 30 days expenses pattern)
+        const last30Days = new Date();
+        last30Days.setDate(last30Days.getDate() - 30);
 
         const weeklyData = await Expense.aggregate([
             {
                 $match: {
                     user: userid,
                     type: 'expense',
-                    date: { $gte: last7Days }
+                    date: { $gte: last30Days }
                 }
             },
             {

@@ -1,0 +1,20 @@
+{
+  "userId": "699c1bd2b786bcf659df4890",
+  "totalTx": 2,
+  "expenseTypeTx": 1,
+  "categoryData": [
+    {
+      "value": 2500,
+      "name": "Food & Drink"
+    }
+  ],
+  "monthlyData": [
+    {
+      "_id": 2,
+      "income": 100000,
+      "expense": 2500
+    }
+  ],
+  "sampleUserTxType": "income",
+  "sampleDate": "2026-02-24T03:35:12.711Z"
+}
