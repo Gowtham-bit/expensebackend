@@ -47,7 +47,7 @@ const getBudget = async (req, res) => {
 
         // Fetch user preferences for default categories, use user.settings.categories
         const categories = req.user.settings?.categories || [
-            "Shopping", "Food & Drink", "Transport", "Housing", "Dining", "Other"
+            "Shopping", "Food & Drink", "Transport", "Housing", "Entertainment", "Other"
         ];
 
         // Combine categories, budget settings, and actual spending
@@ -121,7 +121,6 @@ const getCategoryIcon = (categoryName) => {
         'Housing': '🏠',
         'Transport': '🚗',
         'Food & Drink': '🍔',
-        'Dining': '🍔',
         'Shopping': '🛍️',
         'Entertainment': '🎬',
         'Healthcare': '🏥',

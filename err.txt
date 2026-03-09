@@ -1,0 +1,6 @@
+Error: Server Error
+    at getAnalytics (file:///D:/Mini%20Project%20S6/expensebackend/backend/src/controllers/expenseController.js:269:15)
+    at Layer.handleRequest (D:\Mini Project S6\expensebackend\backend\node_modules\router\lib\layer.js:152:17)
+    at next (D:\Mini Project S6\expensebackend\backend\node_modules\router\lib\route.js:157:13)
+    at file:///D:/Mini%20Project%20S6/expensebackend/backend/src/middleware/authMiddleware.js:20:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)

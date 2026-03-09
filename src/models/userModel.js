@@ -54,9 +54,8 @@ const userSchema = mongoose.Schema(
                     "Food & Drink",
                     "Transport",
                     "Housing",
-                    "Dining",
+                    "Entertainment",
                     "Salary",
-                    "Income",
                     "Other"
                 ]
             }

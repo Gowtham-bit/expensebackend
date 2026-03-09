@@ -186,9 +186,9 @@ const getAnalytics = async (req, res) => {
         let highestCategory = null;
         let lowestCategory = null;
 
-        if (categoryData.length > 0) {
-            highestCategory = categoryData.reduce((prev, current) => (prev.value > current.value) ? prev : current);
-            lowestCategory = categoryData.reduce((prev, current) => (prev.value < current.value) ? prev : current);
+        if (categoryData && categoryData.length > 0) {
+            highestCategory = categoryData.reduce((prev, current) => (prev.value > current.value) ? prev : current, categoryData[0]);
+            lowestCategory = categoryData.reduce((prev, current) => (prev.value < current.value) ? prev : current, categoryData[0]);
         }
 
         // Add colors to categories (simple round robin or predefined)
@@ -227,16 +227,12 @@ const getAnalytics = async (req, res) => {
             expenses: d.expense
         }));
 
-        // 4. Weekly Data (Last 30 days expenses pattern)
-        const last30Days = new Date();
-        last30Days.setDate(last30Days.getDate() - 30);
-
+        // 4. Weekly Data (Lifetime Expenses mapped by Day of the week)
         const weeklyData = await Expense.aggregate([
             {
                 $match: {
                     user: userid,
-                    type: 'expense',
-                    date: { $gte: last30Days }
+                    type: 'expense'
                 }
             },
             {
@@ -265,8 +261,8 @@ const getAnalytics = async (req, res) => {
         });
 
     } catch (error) {
-        res.status(500);
-        throw new Error('Server Error');
+        console.error("Analytics Error:", error);
+        res.status(500).json({ message: error.message, stack: error.stack });
     }
 };
 
