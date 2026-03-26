@@ -1,5 +1,6 @@
 import User from '../models/userModel.js';
 import generateToken from '../utils/generateToken.js';
+import { OAuth2Client } from 'google-auth-library';
 
 // @desc    Auth user & get token
 // @route   POST /api/users/login
@@ -156,5 +157,55 @@ const deleteUser = async (req, res) => {
         throw new Error('User not found');
     }
 };
+// @desc    Auth with Google
+// @route   POST /api/users/google
+// @access  Public
+const googleAuth = async (req, res) => {
+    const { token } = req.body;
+    try {
+        const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+        const ticket = await client.verifyIdToken({
+            idToken: token,
+            audience: process.env.GOOGLE_CLIENT_ID,
+        });
+        const payload = ticket.getPayload();
+        const { email, name, picture, sub } = payload;
 
-export { authUser, registerUser, getUserProfile, updateUserProfile, getUsers, deleteUser };
+        let user = await User.findOne({ email });
+
+        if (user) {
+            // Link google account to existing email if not linked
+            if (!user.googleId) {
+                user.googleId = sub;
+                if (!user.avatar) user.avatar = picture;
+                await user.save();
+            }
+        } else {
+            // Create a new user for Google Sign-In
+            user = await User.create({
+                name,
+                email,
+                googleId: sub,
+                avatar: picture,
+                // Generate a random password since mongoose schema might still expect strings if modified, but we made it required: false
+            });
+        }
+
+        res.json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            isAdmin: user.isAdmin,
+            phone: user.phone,
+            location: user.location,
+            avatar: user.avatar,
+            settings: user.settings,
+            token: generateToken(user._id),
+        });
+    } catch (error) {
+        res.status(401);
+        throw new Error('Invalid Google token');
+    }
+};
+
+export { authUser, registerUser, getUserProfile, updateUserProfile, getUsers, deleteUser, googleAuth };
