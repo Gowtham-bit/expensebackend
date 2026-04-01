@@ -47,7 +47,7 @@ const getBudget = async (req, res) => {
 
         // Fetch user preferences for default categories, use user.settings.categories
         const categories = req.user.settings?.categories || [
-            "Shopping", "Food & Drink", "Transport", "Housing", "Entertainment", "Other"
+            "Food", "Travel", "Rent", "Utilities", "Shopping", "Entertainment", "Health / Medical", "Education", "Groceries", "Dining Out", "Fuel", "Subscriptions", "Mobile Recharge", "Insurance", "Gifts / Donations", "Personal Care", "Fitness / Gym"
         ];
 
         // Combine categories, budget settings, and actual spending
@@ -118,18 +118,34 @@ const updateBudget = async (req, res) => {
 // Simple helper to assign default icons to category strings 
 const getCategoryIcon = (categoryName) => {
     const icons = {
-        'Housing': '🏠',
-        'Transport': '🚗',
-        'Food & Drink': '🍔',
+        'Food': '🍔',
+        'Travel': '🚗',
+        'Rent': '🏠',
+        'Utilities': '💡',
         'Shopping': '🛍️',
         'Entertainment': '🎬',
-        'Healthcare': '🏥',
+        'Health / Medical': '🏥',
         'Education': '📚',
-        'Utilities': '💡',
-        'Groceries': '🛒',
-        'Travel': '✈️',
-        'Salary': '💰',
-        'Income': '💵',
+        'Groceries': '🥦',
+        'Dining Out': '🍽️',
+        'Fuel': '⛽',
+        'Subscriptions': '📺',
+        'Mobile Recharge': '📱',
+        'Insurance': '💼',
+        'Gifts / Donations': '🎁',
+        'Personal Care': '💇',
+        'Fitness / Gym': '💪',
+        'Salary': '💼',
+        'Freelancing': '💻',
+        'Business Income': '🏢',
+        'Part-time Job': '🧑💻',
+        'Internship': '💼',
+        'Investments (Stocks, Crypto)': '📈',
+        'Rental Income': '🏠',
+        'Interest': '💰',
+        'Bonus': '🎉',
+        'Scholarship': '🎓',
+        'Gifts Received': '🎁',
         'Other': '📦'
     };
     return icons[categoryName] || '🏷️';

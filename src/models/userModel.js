@@ -55,13 +55,7 @@ const userSchema = mongoose.Schema(
             categories: {
                 type: [String],
                 default: [
-                    "Shopping",
-                    "Food & Drink",
-                    "Transport",
-                    "Housing",
-                    "Entertainment",
-                    "Salary",
-                    "Other"
+                    "Food", "Travel", "Rent", "Utilities", "Shopping", "Entertainment", "Health / Medical", "Education", "Groceries", "Dining Out", "Fuel", "Subscriptions", "Mobile Recharge", "Insurance", "Gifts / Donations", "Personal Care", "Fitness / Gym", "Salary", "Freelancing", "Business Income", "Part-time Job", "Internship", "Investments", "Rental Income", "Interest", "Bonus", "Scholarship", "Gifts Received"
                 ]
             }
         },
